@@ -152,12 +152,6 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
     <stop offset="0.55" stop-color="#120d33" stop-opacity="0"/>
     <stop offset="1" stop-color="#120d33" stop-opacity="0.6"/>
   </radialGradient>
-  <filter id="soft4" x="-10%" y="-50%" width="120%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
-  <filter id="soft2" x="-5%" y="-20%" width="110%" height="140%"><feGaussianBlur stdDeviation="2"/></filter>
-  <filter id="soft1"><feGaussianBlur stdDeviation="0.8"/></filter>
-  <filter id="bloom" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
-  <filter id="glow" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 0.9  0 0 0 0 1  0 0 0 0.55 0"/></filter>
   <linearGradient id="palmNear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#33297c"/><stop offset="1" stop-color="#120e38"/></linearGradient>
   <linearGradient id="palmMid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3d9a"/><stop offset="1" stop-color="#28215f"/></linearGradient>
   <linearGradient id="bldg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d8a6dc"/><stop offset="1" stop-color="#b58fd4"/></linearGradient>
@@ -165,6 +159,11 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
   <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4c43a0"/><stop offset="1" stop-color="#2f2972"/></linearGradient>
   <linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a43a6"/><stop offset="0.5" stop-color="#2c2a7a"/><stop offset="1" stop-color="#1b1850"/></linearGradient>
   <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0d4" stop-opacity="0.5"/><stop offset="1" stop-color="#fff0d4" stop-opacity="0"/></linearGradient>
+  <radialGradient id="cloud" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ffe0f2" stop-opacity="0.8"/><stop offset="0.5" stop-color="#ffd3ea" stop-opacity="0.35"/><stop offset="1" stop-color="#ffd3ea" stop-opacity="0"/></radialGradient>
+  <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff0d0" stop-opacity="0.75"/><stop offset="1" stop-color="#fff0d0" stop-opacity="0"/></radialGradient>
+  <radialGradient id="haloPink" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#ff7fb8" stop-opacity="0.6"/><stop offset="1" stop-color="#ff7fb8" stop-opacity="0"/></radialGradient>
+  <radialGradient id="shade" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#120e38" stop-opacity="0.5"/><stop offset="1" stop-color="#120e38" stop-opacity="0"/></radialGradient>
+  <radialGradient id="disc" cx="0.5" cy="0.5" r="0.5"><stop offset="0.6" stop-color="#fff4e0" stop-opacity="0.9"/><stop offset="1" stop-color="#fff4e0" stop-opacity="0"/></radialGradient>
 </defs>
 <style>
   .streak { animation: drift 40s ease-in-out infinite alternate; }
@@ -187,12 +186,12 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
 
 <rect width="1600" height="700" fill="url(#sky)"/>
 <circle cx="1020" cy="610" r="560" fill="url(#sun)"/>
-<circle cx="1020" cy="612" r="120" fill="#ffe3d0" opacity=".55" filter="url(#bloom)"/>
-<circle cx="1020" cy="612" r="58" fill="#fff4e0" opacity="0.85" filter="url(#soft2)"/>
+<circle cx="1020" cy="612" r="170" fill="url(#halo)"/>
+<circle cx="1020" cy="612" r="66" fill="url(#disc)"/>
 
-<g class="streak" filter="url(#soft4)"><ellipse cx="420" cy="118" rx="480" ry="9" fill="url(#streak)"/><ellipse cx="1180" cy="168" rx="560" ry="7" fill="url(#streak)" opacity=".8"/></g>
-<g class="streak b" filter="url(#soft4)"><ellipse cx="760" cy="262" rx="620" ry="11" fill="url(#streak)" opacity=".7"/><ellipse cx="260" cy="338" rx="380" ry="6" fill="url(#streak)" opacity=".6"/><ellipse cx="1320" cy="372" rx="420" ry="8" fill="url(#streak)" opacity=".65"/></g>
-<g class="streak" filter="url(#soft4)"><ellipse cx="900" cy="470" rx="520" ry="6" fill="url(#streak)" opacity=".55"/><ellipse cx="300" cy="512" rx="300" ry="5" fill="url(#streak)" opacity=".5"/></g>
+<g class="streak"><ellipse cx="420" cy="118" rx="480" ry="22" fill="url(#cloud)"/><ellipse cx="1180" cy="168" rx="560" ry="17" fill="url(#cloud)" opacity=".8"/></g>
+<g class="streak b"><ellipse cx="760" cy="262" rx="620" ry="26" fill="url(#cloud)" opacity=".7"/><ellipse cx="260" cy="338" rx="380" ry="14" fill="url(#cloud)" opacity=".6"/><ellipse cx="1320" cy="372" rx="420" ry="19" fill="url(#cloud)" opacity=".65"/></g>
+<g class="streak"><ellipse cx="900" cy="470" rx="520" ry="14" fill="url(#cloud)" opacity=".55"/><ellipse cx="300" cy="512" rx="300" ry="12" fill="url(#cloud)" opacity=".5"/></g>
 
 <path d="M90 330 L330 205" stroke="url(#trail)" stroke-width="3" stroke-linecap="round"/>
 <g class="plane"><path d="M332 203 l14 -5 l-3 4 l7 1 l-8 3 l-2 5 l-3 -4 z" fill="#3a3282"/></g>
@@ -200,17 +199,17 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
 <path class="bird b" d="M260 300 q7 -7 14 0 q7 -7 14 0"/>
 <path class="bird" style="animation-delay:-28s" d="M120 220 q6 -6 12 0 q6 -6 12 0"/>
 
-<path d="${skyline(7, 650, 20, 90)}" fill="url(#bldg)" opacity=".55" filter="url(#soft2)"/>
-<path d="${skyline(42, 660, 10, 55)}" fill="url(#bldg2)" opacity=".75" filter="url(#soft1)"/>
-<g fill="#ffe3b5" opacity=".8" filter="url(#glow)">${windows(3, 40, 1560, 615, 650, 40)}</g>
+<path d="${skyline(7, 650, 20, 90)}" fill="url(#bldg)" opacity=".55"/>
+<path d="${skyline(42, 660, 10, 55)}" fill="url(#bldg2)" opacity=".75"/>
+<g fill="#ffe3b5" opacity=".8">${windows(3, 40, 1560, 615, 650, 40)}</g>
 <rect y="560" width="1600" height="130" fill="url(#haze)"/>
-<ellipse cx="800" cy="660" rx="900" ry="40" fill="#ffc6dc" opacity=".35" filter="url(#soft4)"/>
+<ellipse cx="800" cy="662" rx="1000" ry="70" fill="url(#haloPink)" opacity=".55"/>
 
-<g fill="#6a5bbd" opacity=".85" filter="url(#soft2)">${palm(560, 652, 170, 10)}</g>
-<g fill="#6a5bbd" opacity=".85" filter="url(#soft2)">${palm(1180, 652, 190, -12)}</g>
-<g fill="#6a5bbd" opacity=".8" filter="url(#soft2)">${palm(1290, 655, 150, 8)}</g>
+<g fill="#6a5bbd" opacity=".85">${palm(560, 652, 170, 10)}</g>
+<g fill="#6a5bbd" opacity=".85">${palm(1180, 652, 190, -12)}</g>
+<g fill="#6a5bbd" opacity=".8">${palm(1290, 655, 150, 8)}</g>
 
-<g stroke="#2a2468" stroke-width="1.6" fill="none" opacity=".7" filter="url(#soft1)">
+<g stroke="#2a2468" stroke-width="1.6" fill="none" opacity=".7">
   <path d="M-40 420 Q130 470 300 405 Q580 478 860 405 Q1140 478 1420 405 Q1530 440 1640 420"/>
   <path d="M-40 440 Q130 488 300 425 Q580 496 860 425 Q1140 496 1420 425 Q1530 458 1640 440"/>
 </g>
@@ -223,32 +222,35 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
 <g>
   <rect x="440" y="604" width="400" height="86" fill="url(#roof)"/>
   <rect x="440" y="598" width="400" height="9" fill="#ffb3cf"/>
-  <g class="glow" fill="#ffe2b8" filter="url(#glow)"><rect x="462" y="626" width="80" height="42"/><rect x="556" y="626" width="80" height="42"/><rect x="650" y="626" width="80" height="42"/></g>
+  <ellipse cx="596" cy="647" rx="200" ry="52" fill="url(#halo)" opacity=".7"/>
+  <g class="glow" fill="#ffe2b8"><rect x="462" y="626" width="80" height="42"/><rect x="556" y="626" width="80" height="42"/><rect x="650" y="626" width="80" height="42"/></g>
   <rect x="750" y="630" width="34" height="60" fill="#ffd0a0"/>
   <g fill="#7a6cc8"><rect x="470" y="650" width="20" height="18"/><rect x="590" y="652" width="14" height="16"/><rect x="680" y="648" width="22" height="20"/></g>
 </g>
 
 <g>
   <polygon points="380,548 920,548 980,572 330,572" fill="url(#roof)"/>
-  <rect x="330" y="572" width="650" height="14" fill="url(#under)" class="glow" filter="url(#glow)"/>
-  <rect x="330" y="570" width="650" height="3" fill="url(#neon)" filter="url(#glow)"/>
+  <ellipse cx="655" cy="580" rx="380" ry="30" fill="url(#halo)" opacity=".6"/>
+  <rect x="330" y="572" width="650" height="14" fill="url(#under)" class="glow"/>
+  <rect x="330" y="570" width="650" height="3" fill="url(#neon)"/>
   <rect x="330" y="568" width="650" height="7" fill="url(#neon)" opacity=".25"/>
-  <polygon points="345,586 965,586 1015,690 295,690" fill="url(#beam)" opacity=".7" filter="url(#soft4)"/>
+  <polygon points="345,586 965,586 1015,690 295,690" fill="url(#beam)" opacity=".7"/>
   <g fill="#2b2670"><rect x="392" y="586" width="12" height="104"/><rect x="906" y="586" width="12" height="104"/></g>
   <g><rect x="560" y="640" width="26" height="50" rx="3" fill="#5d52b0"/><rect x="564" y="646" width="18" height="10" fill="#ffe2b8"/>
      <rect x="720" y="640" width="26" height="50" rx="3" fill="#5d52b0"/><rect x="724" y="646" width="18" height="10" fill="#ffe2b8"/></g>
 </g>
 
 <g>
+  <ellipse cx="1050" cy="510" rx="120" ry="80" fill="url(#haloPink)"/>
   <rect x="1046" y="520" width="8" height="170" fill="#2b2670"/>
   <rect x="1000" y="482" width="100" height="56" rx="6" fill="#2b2670"/>
   <rect x="996" y="478" width="108" height="64" rx="8" fill="none" stroke="url(#neon)" stroke-width="6" opacity=".25"/>
-  <g class="flicker" filter="url(#glow)"><rect x="998" y="480" width="104" height="60" rx="7" fill="none" stroke="url(#neon)" stroke-width="2.5"/>
+  <g class="flicker"><rect x="998" y="480" width="104" height="60" rx="7" fill="none" stroke="url(#neon)" stroke-width="2.5"/>
   <rect x="1012" y="494" width="76" height="10" rx="3" fill="#ff7fb8"/><rect x="1012" y="512" width="50" height="10" rx="3" fill="#7fe0f0"/></g>
 </g>
 
 <g>
-  <g filter="url(#soft1)"><rect x="40" y="610" width="150" height="66" rx="4" fill="#5b55a8"/>
+  <g><rect x="40" y="610" width="150" height="66" rx="4" fill="#5b55a8"/>
   <path d="M190 632 L238 632 Q254 634 260 652 L262 676 L190 676 Z" fill="#4a4496"/>
   <path d="M204 638 L236 638 Q246 640 250 654 L204 654 Z" fill="#a9a2e6" opacity=".8"/>
   <g fill="#211c56"><circle cx="78" cy="682" r="13"/><circle cx="112" cy="682" r="13"/><circle cx="226" cy="682" r="13"/></g>
@@ -256,16 +258,17 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
 
 <rect y="688" width="1600" height="212" fill="url(#road)"/>
 <rect y="688" width="1600" height="3" fill="#ffc4dc" opacity=".9"/>
-<rect x="1032" y="692" width="36" height="170" fill="url(#reflect)" filter="url(#soft4)"/>
-<ellipse cx="655" cy="702" rx="400" ry="26" fill="#ffe6c4" opacity=".3" filter="url(#soft4)"/>
-<g fill="#ffe8f3" opacity=".35" filter="url(#soft1)"><polygon points="730,770 870,770 880,778 720,778"/><polygon points="660,840 900,840 916,852 644,852"/></g>
+<ellipse cx="1050" cy="740" rx="34" ry="110" fill="url(#haloPink)"/>
+<ellipse cx="655" cy="704" rx="440" ry="36" fill="url(#halo)" opacity=".5"/>
+<g fill="#ffe8f3" opacity=".35"><polygon points="730,770 870,770 880,778 720,778"/><polygon points="660,840 900,840 916,852 644,852"/></g>
 
 <g>
   <path d="M1110 704 L1110 684 Q1110 670 1132 668 L1196 662 Q1222 638 1266 636 L1334 636 Q1366 640 1384 664 L1414 668 Q1436 672 1436 690 L1436 704 Z" fill="url(#carBody)"/>
   <path d="M1206 662 Q1228 646 1264 644 L1290 644 L1290 662 Z M1300 644 L1330 644 Q1352 648 1366 662 L1300 662 Z" fill="#8f86d8" opacity=".85"/>
-  <rect x="1110" y="682" width="326" height="3" fill="#ffb3cf" opacity=".6" filter="url(#soft1)"/>
-  <ellipse cx="1272" cy="726" rx="170" ry="8" fill="#120e38" opacity=".35" filter="url(#soft2)"/>
-  <rect x="1428" y="676" width="8" height="6" fill="#ff5470" class="glow" filter="url(#glow)"/>
+  <rect x="1110" y="682" width="326" height="3" fill="#ffb3cf" opacity=".6"/>
+  <ellipse cx="1272" cy="726" rx="190" ry="12" fill="url(#shade)"/>
+  <circle cx="1434" cy="679" r="16" fill="url(#haloPink)"/>
+  <rect x="1428" y="676" width="8" height="6" fill="#ff5470" class="glow"/>
   <g fill="#171345"><circle cx="1170" cy="704" r="20"/><circle cx="1376" cy="704" r="20"/></g>
   <g fill="#6f66c4"><circle cx="1170" cy="704" r="8"/><circle cx="1376" cy="704" r="8"/></g>
 </g>
@@ -275,7 +278,6 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
 <g class="palm" fill="url(#palmNear)">${palm(1510, 920, 600, -40)}</g>
 
 <rect width="1600" height="900" fill="url(#vignette)"/>
-<rect width="1600" height="900" filter="url(#grain)" opacity=".06"/>
 </svg>`
 
 const HIDEABLE = [
