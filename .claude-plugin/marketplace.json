@@ -1,6 +1,6 @@
 {
   "name": "leonida-theme-mod",
-  "description": "Miami Dusk: a hazy tropical dusk theme mod for the Claude desktop app.",
+  "description": "Leonida Dusk: a hazy tropical dusk theme mod for the Claude desktop app.",
   "owner": { "name": "chatgptonmarketing" },
-  "plugins": [{ "name": "miami-dusk", "source": "./" }]
+  "plugins": [{ "name": "leonida-dusk", "source": "./" }]
 }

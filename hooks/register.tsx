@@ -4,7 +4,7 @@ import { makeColors } from './make-colors.js'
 
 // Hazy tropical dusk: blue-violet surfaces, hot-pink accent.
 const { theme, problems } = makeColors({
-  label: 'Miami Dusk',
+  label: 'Leonida Dusk',
   only: 'dark',
   roles: { accent: '#ff5fa2', danger: '#ff6b6b', success: '#4fe0b0', warning: '#ffb86b', pro: '#5fd4e8' },
   dark: {
