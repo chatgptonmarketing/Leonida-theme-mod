@@ -25,3 +25,7 @@ In the desktop app, where `/plugin` does not run: click **+** next to the prompt
 Colors and the scene live in `hooks/register.tsx`. The palette is built with `hooks/make-colors.js`, which checks contrast for you.
 
 The theme only draws in the desktop and mobile apps, not in a terminal.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
