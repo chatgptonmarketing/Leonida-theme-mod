@@ -363,6 +363,13 @@ export const register: Register = (on) => {
 
     const { Svg } = $.ui.resolve(e)
 
-    return <Svg source={SCENE} alt="A hazy pink-and-violet tropical dusk with palm trees and a roadside gas station" />
+    // isInteractive draws the scene in a sandboxed frame, where its CSS animation runs; as a plain image it stays still.
+    return (
+      <Svg
+        source={SCENE}
+        alt="A hazy pink-and-violet tropical dusk with palm trees and a roadside gas station"
+        isInteractive
+      />
+    )
   })
 }
