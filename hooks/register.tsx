@@ -99,6 +99,19 @@ function windows(seed: number, x0: number, x1: number, y0: number, y1: number, n
   }).join('')
 }
 
+// Sway a group about a point, with SMIL (played where CSS animation may not be).
+function sway(cx: number, cy: number, deg: number, dur: number, inner: string): string {
+  return `<g>${inner}<animateTransform attributeName="transform" type="rotate" values="${-deg} ${cx} ${cy};${deg} ${cx} ${cy};${-deg} ${cx} ${cy}" keyTimes="0;0.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" dur="${dur}s" repeatCount="indefinite"/></g>`
+}
+
+function drift(dx: number, dy: number, dur: number, inner: string, attrs = ''): string {
+  return `<g ${attrs}>${inner}<animateTransform attributeName="transform" type="translate" values="0 0;${dx} ${dy};0 0" keyTimes="0;0.5;1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1" dur="${dur}s" repeatCount="indefinite"/></g>`
+}
+
+function fly(from: number, to: number, dur: number, begin: number, inner: string): string {
+  return `<g>${inner}<animateTransform attributeName="transform" type="translate" values="${from} 0;${to} 0" dur="${dur}s" begin="${begin}s" repeatCount="indefinite"/></g>`
+}
+
 const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
 <defs>
   <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
@@ -167,21 +180,11 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
   <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff0d4" stop-opacity="0.5"/><stop offset="1" stop-color="#fff0d4" stop-opacity="0"/></linearGradient>
 </defs>
 <style>
-  .streak { animation: drift 80s ease-in-out infinite alternate; }
-  .streak.b { animation-duration: 110s; animation-delay: -30s; }
-  @keyframes drift { from { transform: translateX(-50px) } to { transform: translateX(70px) } }
-  .palm { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 8s ease-in-out infinite; }
-  .palm.b { animation-duration: 10s; animation-delay: -4s; }
-  @keyframes sway { 0%,100% { transform: rotate(-0.9deg) } 50% { transform: rotate(1.1deg) } }
   .glow { animation: glow 4s ease-in-out infinite; }
   @keyframes glow { 0%,100% { opacity: .8 } 50% { opacity: 1 } }
   .flicker { animation: flicker 7s steps(1) infinite; }
   @keyframes flicker { 0%,100% { opacity: 1 } 61% { opacity: .55 } 62% { opacity: 1 } 64% { opacity: .6 } 65% { opacity: 1 } }
-  .bird { fill: none; stroke: #2a2468; stroke-width: 2.2; stroke-linecap: round; animation: fly 40s linear infinite; }
-  .bird.b { animation-delay: -15s; animation-duration: 48s; }
-  @keyframes fly { from { transform: translateX(-120px) } to { transform: translateX(1750px) } }
-  .plane { animation: plane 90s linear infinite; }
-  @keyframes plane { from { transform: translate(0,0) } to { transform: translate(260px,-90px) } }
+  .bird { fill: none; stroke: #2a2468; stroke-width: 2.2; stroke-linecap: round; }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important } }
 </style>
 
@@ -190,15 +193,15 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
 <circle cx="1020" cy="612" r="120" fill="#ffe3d0" opacity=".55" filter="url(#bloom)"/>
 <circle cx="1020" cy="612" r="58" fill="#fff4e0" opacity="0.85" filter="url(#soft2)"/>
 
-<g class="streak" filter="url(#soft4)"><ellipse cx="420" cy="118" rx="480" ry="9" fill="url(#streak)"/><ellipse cx="1180" cy="168" rx="560" ry="7" fill="url(#streak)" opacity=".8"/></g>
-<g class="streak b" filter="url(#soft4)"><ellipse cx="760" cy="262" rx="620" ry="11" fill="url(#streak)" opacity=".7"/><ellipse cx="260" cy="338" rx="380" ry="6" fill="url(#streak)" opacity=".6"/><ellipse cx="1320" cy="372" rx="420" ry="8" fill="url(#streak)" opacity=".65"/></g>
-<g class="streak" filter="url(#soft4)"><ellipse cx="900" cy="470" rx="520" ry="6" fill="url(#streak)" opacity=".55"/><ellipse cx="300" cy="512" rx="300" ry="5" fill="url(#streak)" opacity=".5"/></g>
+${drift(160, 0, 44, `<ellipse cx="420" cy="118" rx="480" ry="9" fill="url(#streak)"/><ellipse cx="1180" cy="168" rx="560" ry="7" fill="url(#streak)" opacity=".8"/>`, 'filter="url(#soft4)"')}
+${drift(-200, 0, 60, `<ellipse cx="760" cy="262" rx="620" ry="11" fill="url(#streak)" opacity=".7"/><ellipse cx="260" cy="338" rx="380" ry="6" fill="url(#streak)" opacity=".6"/><ellipse cx="1320" cy="372" rx="420" ry="8" fill="url(#streak)" opacity=".65"/>`, 'filter="url(#soft4)"')}
+${drift(140, 0, 36, `<ellipse cx="900" cy="470" rx="520" ry="6" fill="url(#streak)" opacity=".55"/><ellipse cx="300" cy="512" rx="300" ry="5" fill="url(#streak)" opacity=".5"/>`, 'filter="url(#soft4)"')}
 
 <path d="M90 330 L330 205" stroke="url(#trail)" stroke-width="3" stroke-linecap="round"/>
-<g class="plane"><path d="M332 203 l14 -5 l-3 4 l7 1 l-8 3 l-2 5 l-3 -4 z" fill="#3a3282"/></g>
-<path class="bird" d="M200 260 q9 -9 18 0 q9 -9 18 0"/>
-<path class="bird b" d="M260 300 q7 -7 14 0 q7 -7 14 0"/>
-<path class="bird" style="animation-delay:-28s" d="M120 220 q6 -6 12 0 q6 -6 12 0"/>
+${drift(220, -80, 50, `<path d="M332 203 l14 -5 l-3 4 l7 1 l-8 3 l-2 5 l-3 -4 z" fill="#3a3282"/>`)}
+${fly(-300, 1600, 22, 0, `<path class="bird" d="M200 260 q9 -9 18 0 q9 -9 18 0"/>`)}
+${fly(-400, 1500, 26, 4, `<path class="bird" d="M260 300 q7 -7 14 0 q7 -7 14 0"/>`)}
+${fly(-250, 1650, 30, 11, `<path class="bird" d="M120 220 q6 -6 12 0 q6 -6 12 0"/>`)}
 
 <path d="${skyline(7, 650, 20, 90)}" fill="url(#bldg)" opacity=".55" filter="url(#soft2)"/>
 <path d="${skyline(42, 660, 10, 55)}" fill="url(#bldg2)" opacity=".75" filter="url(#soft1)"/>
@@ -243,7 +246,7 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
   <rect x="1046" y="520" width="8" height="170" fill="#2b2670"/>
   <rect x="1000" y="482" width="100" height="56" rx="6" fill="#2b2670"/>
   <rect x="996" y="478" width="108" height="64" rx="8" fill="none" stroke="url(#neon)" stroke-width="6" opacity=".25"/>
-  <g class="flicker" filter="url(#glow)"><rect x="998" y="480" width="104" height="60" rx="7" fill="none" stroke="url(#neon)" stroke-width="2.5"/>
+  <g class="flicker" filter="url(#glow)"><animate attributeName="opacity" values="1;1;.35;1;.5;1;1" keyTimes="0;.6;.62;.64;.66;.68;1" dur="5s" repeatCount="indefinite"/><rect x="998" y="480" width="104" height="60" rx="7" fill="none" stroke="url(#neon)" stroke-width="2.5"/>
   <rect x="1012" y="494" width="76" height="10" rx="3" fill="#ff7fb8"/><rect x="1012" y="512" width="50" height="10" rx="3" fill="#7fe0f0"/></g>
 </g>
 
@@ -256,7 +259,7 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
 
 <rect y="688" width="1600" height="212" fill="url(#road)"/>
 <rect y="688" width="1600" height="3" fill="#ffc4dc" opacity=".9"/>
-<rect x="1032" y="692" width="36" height="170" fill="url(#reflect)" filter="url(#soft4)"/>
+<rect x="1032" y="692" width="36" height="170" fill="url(#reflect)" filter="url(#soft4)"><animate attributeName="opacity" values=".6;1;.6" dur="3s" repeatCount="indefinite"/></rect>
 <ellipse cx="655" cy="702" rx="400" ry="26" fill="#ffe6c4" opacity=".3" filter="url(#soft4)"/>
 <g fill="#ffe8f3" opacity=".35" filter="url(#soft1)"><polygon points="730,770 870,770 880,778 720,778"/><polygon points="660,840 900,840 916,852 644,852"/></g>
 
@@ -270,9 +273,9 @@ const SCENE = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" pr
   <g fill="#6f66c4"><circle cx="1170" cy="704" r="8"/><circle cx="1376" cy="704" r="8"/></g>
 </g>
 
-<g class="palm" fill="url(#palmMid)">${palm(250, 700, 280, -16)}</g>
-<g class="palm b" fill="url(#palmNear)">${palm(120, 920, 560, 34)}</g>
-<g class="palm" fill="url(#palmNear)">${palm(1510, 920, 600, -40)}</g>
+<g fill="url(#palmMid)">${sway(250, 700, 1.8, 7, palm(250, 700, 280, -16))}</g>
+<g fill="url(#palmNear)">${sway(120, 920, 2.2, 6, palm(120, 920, 560, 34))}</g>
+<g fill="url(#palmNear)">${sway(1510, 920, 2, 7.5, palm(1510, 920, 600, -40))}</g>
 
 <rect width="1600" height="900" fill="url(#vignette)"/>
 <rect width="1600" height="900" filter="url(#grain)" opacity=".06"/>
